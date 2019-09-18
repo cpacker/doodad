@@ -24,10 +24,11 @@ from doodad.utils import REPO_DIR
 
 
 class Sweeper(object):
-    def __init__(self, hyper_config, repeat, include_name=False):
+    def __init__(self, hyper_config, repeat, include_name=False, include_count=True):
         self.hyper_config = hyper_config
         self.repeat = repeat
         self.include_name=include_name
+        self.include_count=include_count
 
     def __iter__(self):
         count = 0
@@ -37,6 +38,9 @@ class Sweeper(object):
                 if self.include_name:
                     timestamp = datetime.now().strftime('%Y_%m_%d_%H_%M_%S')
                     kwargs['exp_name'] = "%s_%d" % (timestamp, count)
+                # Can be used to write different hyper configs to different dirs
+                if self.include_count:
+                    kwargs['count'] = '%d' % count
                 count += 1
                 yield kwargs
 

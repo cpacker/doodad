@@ -35,7 +35,8 @@ class DoodadSweeper(object):
         mounts.append(mount.MountLocal(local_dir=REPO_DIR, pythonpath=True))
         self.mounts = mounts
         self.mount_out_local = mount.MountLocal(local_dir=local_output_dir, mount_point=docker_output_dir, output=True)
-        self.mount_out_s3 = mount.MountS3(s3_path='exp_logs', mount_point=docker_output_dir, output=True)
+        # Suppress "KeyError: 'default'" when not using S3
+        #self.mount_out_s3 = mount.MountS3(s3_path='exp_logs', mount_point=docker_output_dir, output=True)
 
     def run_sweep_serial(self, run_method, params, repeat=1):
         run_sweep_serial(run_method, params, repeat=repeat)
